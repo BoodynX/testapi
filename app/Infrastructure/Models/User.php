@@ -5,8 +5,9 @@ namespace App\Infrastructure\Models;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -33,5 +34,15 @@ class User extends Authenticatable
     public function seasonPasses(): MorphToMany
     {
         return $this->morphedByMany(SeasonPass::class, 'entitlement');
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
