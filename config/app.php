@@ -160,6 +160,11 @@ return [
         App\Framework\Providers\EventServiceProvider::class,
         App\Framework\Providers\RouteServiceProvider::class,
 
+        /*
+         * Domain Service Providers...
+         */
+        App\User\Application\UserServiceProvider::class,
+
     ],
 
     /*

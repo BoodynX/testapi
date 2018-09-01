@@ -3,16 +3,16 @@
 namespace App\User\Api\Controllers;
 
 use App\Framework\Http\Controllers\Controller;
-use App\Core\Infrastructure\Models\User;
 use App\User\Api\Requests\LoginRequest;
 use App\User\Api\Requests\RegistrationRequest;
+use App\User\Application\RegistrationHandler;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    public function register(RegistrationRequest $request)
+    public function register(RegistrationRequest $request, RegistrationHandler $registrationHandler)
     {
-        $user = User::create([$request->credentials()]);
-        $token = auth()->login($user);
+        $token = $registrationHandler->handle($request->toCommand());
 
         return $this->respondWithToken($token);
     }
@@ -26,7 +26,7 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    protected function respondWithToken($token)
+    protected function respondWithToken(string $token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,
