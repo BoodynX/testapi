@@ -8,7 +8,7 @@ class CreatePackagesVodsTable extends Migration
 {
     public function up()
     {
-        Schema::create('vods_in_packages', function (Blueprint $table) {
+        Schema::create('packages_vods', function (Blueprint $table) {
             $table->unsignedInteger('package_id');
             $table->unsignedInteger('vod_id');
             $table->timestamps();
@@ -21,6 +21,6 @@ class CreatePackagesVodsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('vods_in_packages');
+        Schema::dropIfExists('packages_vods');
     }
 }
