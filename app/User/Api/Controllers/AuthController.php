@@ -4,28 +4,22 @@ namespace App\User\Api\Controllers;
 
 use App\Framework\Http\Controllers\Controller;
 use App\Core\Infrastructure\Models\User;
-use Illuminate\Http\Request;
+use App\User\Api\Requests\LoginRequest;
+use App\User\Api\Requests\RegistrationRequest;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegistrationRequest $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-
+        $user = User::create([$request->credentials()]);
         $token = auth()->login($user);
 
         return $this->respondWithToken($token);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials = $request->only(['email', 'password']);
-
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($request->credentials())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
