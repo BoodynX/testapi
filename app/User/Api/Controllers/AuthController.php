@@ -5,8 +5,8 @@ namespace App\User\Api\Controllers;
 use App\Framework\Http\Controllers\Controller;
 use App\User\Api\Requests\LoginRequest;
 use App\User\Api\Requests\RegistrationRequest;
-use App\User\Application\LogInHandler;
-use App\User\Application\RegistrationHandler;
+use App\User\Application\Handlers\LogInHandler;
+use App\User\Application\Handlers\RegistrationHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 

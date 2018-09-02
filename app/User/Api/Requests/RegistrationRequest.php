@@ -5,7 +5,7 @@ namespace App\User\Api\Requests;
 use App\Core\Api\Requests\ApiRequest;
 use App\User\Domain\ValueObjects\Email;
 use App\User\Domain\ValueObjects\Password;
-use App\User\Application\Register;
+use App\User\Application\Commands\Register;
 
 class RegistrationRequest extends ApiRequest
 {

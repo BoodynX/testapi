@@ -1,7 +1,8 @@
 <?php
 
-namespace App\User\Application;
+namespace App\User\Application\Handlers;
 
+use App\User\Application\Commands\LogIn;
 use App\User\Domain\UserRepository;
 
 final class LogInHandler

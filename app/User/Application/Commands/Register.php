@@ -1,11 +1,11 @@
 <?php
 
-namespace App\User\Application;
+namespace App\User\Application\Commands;
 
 use App\User\Domain\ValueObjects\Email;
 use App\User\Domain\ValueObjects\Password;
 
-final class LogIn
+final class Register
 {
     /** @var Email */
     private $email;
@@ -13,10 +13,14 @@ final class LogIn
     /** @var Password */
     private $password;
 
-    public function __construct(Email $email, Password $password)
+    /** @var string */
+    private $name;
+
+    public function __construct(Email $email, Password $password, string $name)
     {
         $this->email = $email;
         $this->password = $password;
+        $this->name = $name;
     }
 
     public function getEmail(): Email
@@ -27,5 +31,10 @@ final class LogIn
     public function getPassword(): Password
     {
         return $this->password;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

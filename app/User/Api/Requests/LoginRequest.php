@@ -3,7 +3,7 @@
 namespace App\User\Api\Requests;
 
 use App\Core\Api\Requests\ApiRequest;
-use App\User\Application\LogIn;
+use App\User\Application\Commands\LogIn;
 use App\User\Domain\ValueObjects\Email;
 use App\User\Domain\ValueObjects\Password;
 
