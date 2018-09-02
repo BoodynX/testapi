@@ -5,20 +5,25 @@ namespace App\User\Domain\ValueObjects;
 class Password
 {
     /** @var string */
-    private $hash;
+    private $password;
 
     public function __construct(string $password)
     {
-        $this->hash = bcrypt($password);
+        $this->password = $password;
     }
 
     public function __toString(): string
     {
-        return $this->hash;
+        return $this->toNative();
     }
 
-    public function getNative(): string
+    public function toNative(): ?string
     {
-        return $this->hash;
+        return $this->password;
+    }
+
+    public function getHash(): string
+    {
+        return bcrypt($this->password);
     }
 }

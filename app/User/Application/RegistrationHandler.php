@@ -2,7 +2,6 @@
 
 namespace App\User\Application;
 
-use App\Core\Infrastructure\Models\User as UserModel;
 use App\User\Domain\User;
 use App\User\Domain\UserRepository;
 
@@ -15,14 +14,14 @@ final class RegistrationHandler
         $this->userRepository = $userRepository;
     }
 
-    public function handle(Register $command): string
+    public function handle(Register $command): void
     {
         $user = User::registrable(
             $command->getEmail(),
             $command->getPassword(),
             $command->getName()
         );
-        $userId = $this->userRepository->add($user);
-        return auth()->login(UserModel::find($userId));
+        $this->userRepository->add($user);
+        $user->logIn($command->getPassword());
     }
 }

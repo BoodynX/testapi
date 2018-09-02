@@ -7,20 +7,27 @@ use App\User\Domain\ValueObjects\Password;
 
 final class User
 {
+    /** @var int|null */
     private $id;
+
+    /** @var Email */
     private $email;
-    private $password;
+
+    /** @var string */
+    private $passwordHash;
+
+    /** @var string */
     private $name;
 
     public function __construct(
         ?int $id,
         Email $email,
-        Password $password,
+        string $password,
         string $name
     ) {
         $this->id = $id;
         $this->email = $email;
-        $this->password = $password;
+        $this->passwordHash = bcrypt($password);
         $this->name = $name;
     }
 
@@ -29,12 +36,12 @@ final class User
         return new User(
             null,
             $email,
-            $password,
+            $password->toNative(),
             $name
         );
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -44,9 +51,9 @@ final class User
         return $this->email;
     }
 
-    public function getPassword(): Password
+    public function getPasswordHash(): string
     {
-        return $this->password;
+        return $this->passwordHash;
     }
 
     public function getName(): string
@@ -56,6 +63,9 @@ final class User
 
     public function logIn(Password $password): void
     {
-
+        auth()->attempt([
+            'email' => $this->getEmail()->getFullAddress(),
+            'password' => $password->toNative()
+        ]);
     }
 }

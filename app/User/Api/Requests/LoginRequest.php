@@ -3,6 +3,9 @@
 namespace App\User\Api\Requests;
 
 use App\Core\Api\Requests\ApiRequest;
+use App\User\Application\LogIn;
+use App\User\Domain\ValueObjects\Email;
+use App\User\Domain\ValueObjects\Password;
 
 class LoginRequest extends ApiRequest
 {
@@ -19,11 +22,8 @@ class LoginRequest extends ApiRequest
         ];
     }
 
-    public function credentials(): array
+    public function toCommand(): LogIn
     {
-        return [
-          'email' => $this->email,
-          'password' => $this->password
-        ];
+        return new LogIn(new Email($this->email), new Password($this->password));
     }
 }
