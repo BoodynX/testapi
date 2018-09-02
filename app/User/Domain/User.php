@@ -2,8 +2,8 @@
 
 namespace App\User\Domain;
 
+use App\User\Domain\ValueObjects\Email;
 use App\User\Domain\ValueObjects\Password;
-use WMDE\EmailAddress\EmailAddress;
 
 final class User
 {
@@ -14,7 +14,7 @@ final class User
 
     public function __construct(
         ?int $id,
-        EmailAddress $email,
+        Email $email,
         Password $password,
         string $name
     ) {
@@ -24,7 +24,7 @@ final class User
         $this->name = $name;
     }
 
-    public static function registrable(EmailAddress $email, Password $password, string $name): User
+    public static function registrable(Email $email, Password $password, string $name): User
     {
         return new User(
             null,
@@ -39,7 +39,7 @@ final class User
         return $this->id;
     }
 
-    public function getEmail(): EmailAddress
+    public function getEmail(): Email
     {
         return $this->email;
     }

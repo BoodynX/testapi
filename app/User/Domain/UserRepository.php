@@ -2,11 +2,13 @@
 
 namespace App\User\Domain;
 
+use App\User\Domain\ValueObjects\Email;
+
 interface UserRepository
 {
     public function add(User $user): int;
 
     public function save(User $user): void;
 
-    public function findById(int $id): ?User;
+    public function findByEmail(Email $email): ?User;
 }

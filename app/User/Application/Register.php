@@ -2,12 +2,12 @@
 
 namespace App\User\Application;
 
+use App\User\Domain\ValueObjects\Email;
 use App\User\Domain\ValueObjects\Password;
-use WMDE\EmailAddress\EmailAddress;
 
 final class Register
 {
-    /** @var EmailAddress */
+    /** @var Email */
     private $email;
 
     /** @var Password */
@@ -16,14 +16,14 @@ final class Register
     /** @var string */
     private $name;
 
-    public function __construct(EmailAddress $email, Password $password, string $name)
+    public function __construct(Email $email, Password $password, string $name)
     {
         $this->email = $email;
         $this->password = $password;
         $this->name = $name;
     }
 
-    public function getEmail(): EmailAddress
+    public function getEmail(): Email
     {
         return $this->email;
     }

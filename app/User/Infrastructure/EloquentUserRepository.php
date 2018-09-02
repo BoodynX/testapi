@@ -5,6 +5,7 @@ namespace App\User\Infrastructure;
 use App\Core\Infrastructure\Models\User as UserModel;
 use App\User\Domain\User;
 use App\User\Domain\UserRepository;
+use App\User\Domain\ValueObjects\Email;
 
 class EloquentUserRepository implements UserRepository
 {
@@ -33,7 +34,7 @@ class EloquentUserRepository implements UserRepository
 
     }
 
-    public function findById(int $id): ?User
+    public function findByEmail(Email $email): ?User
     {
 
     }
