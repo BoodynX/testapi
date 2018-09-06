@@ -4,7 +4,7 @@ namespace App\Core\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Package extends Model
 {
@@ -18,8 +18,8 @@ class Package extends Model
         return $this->belongsToMany(Vod::class);
     }
 
-    public function users(): MorphMany
+    public function users(): MorphToMany
     {
-        return $this->morphMany(User::class, 'entitlement');
+        return $this->morphToMany(User::class, 'entitlement');
     }
 }

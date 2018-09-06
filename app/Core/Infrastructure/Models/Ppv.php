@@ -3,7 +3,7 @@
 namespace App\Core\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Ppv extends Model
 {
@@ -12,8 +12,8 @@ class Ppv extends Model
         'name'
     ];
 
-    public function users(): MorphMany
+    public function users(): MorphToMany
     {
-        return $this->morphMany(User::class, 'entitlement');
+        return $this->morphToMany(User::class, 'entitlement');
     }
 }
