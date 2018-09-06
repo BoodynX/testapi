@@ -12,3 +12,4 @@
 */
 
 include_once app_path('/User/Api/routes.php');
+include_once app_path('/Entitlements/Api/routes.php');
