@@ -20,8 +20,7 @@ class PpvResource extends JsonResource
             'attributes'    => [
                 'name' => $this->name,
             ],
-//            @TODO
-//            'relationships' => new PpvRelationshipResource($this),
+            'relationships' => new PpvRelationshipResource($this),
             'links'         => [
                 'self' => route('ppvs.show', ['ppv' => $this->id]),
             ],

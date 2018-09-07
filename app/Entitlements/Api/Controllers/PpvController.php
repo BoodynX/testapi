@@ -2,10 +2,12 @@
 
 namespace App\Entitlements\Api\Controllers;
 
-use App\Core\Infrastructure\Models\Ppv;
 use App\Entitlements\Api\Resources\PpvResource;
 use App\Entitlements\Api\Resources\PpvsResource;
+use App\Entitlements\Infrastructure\Models\Ppv;
 use App\Framework\Http\Controllers\Controller;
+use App\User\Api\Resources\UserResource;
+use App\User\Infrastructure\Models\User;
 use Illuminate\Http\Request;
 
 class PpvController extends Controller
@@ -15,12 +17,6 @@ class PpvController extends Controller
         return new PpvsResource(Ppv::with(['users'])->paginate());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -33,26 +29,22 @@ class PpvController extends Controller
         return new PpvResource($ppv);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
+    }
+
+    /*
+     * Relationships
+     */
+
+    public function users(User $user)
+    {
+        return new UserResource($user);
     }
 }
