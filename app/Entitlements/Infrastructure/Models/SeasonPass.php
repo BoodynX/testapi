@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Core\Infrastructure\Models;
+namespace App\Entitlements\Infrastructure\Models;
 
+use App\User\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 

@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Core\Infrastructure\Models;
+namespace App\User\Infrastructure\Models;
 
+use App\Entitlements\Infrastructure\Models\Package;
+use App\Entitlements\Infrastructure\Models\Ppv;
+use App\Entitlements\Infrastructure\Models\SeasonPass;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
