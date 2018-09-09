@@ -2,7 +2,8 @@
 
 namespace App\Framework\Providers;
 
-use Illuminate\Support\Facades\Gate;
+use App\Entitlements\Application\Policies\PpvPolicy;
+use App\Entitlements\Infrastructure\Models\Ppv;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        Ppv::class => PpvPolicy::class,
     ];
 
     /**

@@ -7,8 +7,9 @@ use App\Entitlements\Api\Resources\PpvsResource;
 use App\Entitlements\Infrastructure\Models\Ppv;
 use App\Framework\Http\Controllers\Controller;
 use App\User\Api\Resources\UserResource;
-use App\User\Infrastructure\Models\User;
+use App\User\Domain\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PpvController extends Controller
 {
@@ -22,7 +23,7 @@ class PpvController extends Controller
         //
     }
 
-    public function show(Ppv $ppv): PpvResource
+    public function show(Ppv $ppv)
     {
         PpvResource::withoutWrapping();
 
@@ -43,8 +44,10 @@ class PpvController extends Controller
      * Relationships
      */
 
-    public function users(User $user)
+    public function users(UserRepository $userRepository): UserResource
     {
-        return new UserResource($user);
+        UserResource::withoutWrapping();
+
+        return new UserResource($userRepository->findById(Auth::id()));
     }
 }
