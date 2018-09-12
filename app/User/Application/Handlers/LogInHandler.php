@@ -7,6 +7,7 @@ use App\User\Domain\UserRepository;
 
 final class LogInHandler
 {
+    /** @var UserRepository */
     private $userRepository;
 
     public function __construct(UserRepository $userRepository)
@@ -23,5 +24,6 @@ final class LogInHandler
         }
 
         $user->logIn($command->getPassword());
+        $this->userRepository->save($user);
     }
 }

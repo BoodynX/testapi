@@ -4,6 +4,7 @@ namespace App\User\Domain;
 
 use App\User\Domain\ValueObjects\Email;
 use App\User\Domain\ValueObjects\Password;
+use Carbon\Carbon;
 
 final class User
 {
@@ -19,26 +20,35 @@ final class User
     /** @var string */
     private $name;
 
-    public function __construct(
-        ?int $id,
-        Email $email,
-        string $password,
-        string $name
-    ) {
-        $this->id = $id;
-        $this->email = $email;
-        $this->passwordHash = bcrypt($password);
-        $this->name = $name;
-    }
+    /** @var array */
+    private $recordedEvents = [];
+
+    /** @var Carbon|null */
+    private $lastFailedLoginAttempt = null;
+
+    /** @var int */
+    private $failedLoginAttempts = 0;
 
     public static function registrable(Email $email, Password $password, string $name): User
     {
         return new User(
             null,
             $email,
-            $password->toNative(),
+            $password->generateHash(),
             $name
         );
+    }
+
+    public function __construct(
+        ?int $id,
+        Email $email,
+        string $passwordHash,
+        string $name
+    ) {
+        $this->id = $id;
+        $this->email = $email;
+        $this->passwordHash = $passwordHash;
+        $this->name = $name;
     }
 
     public function getId(): ?int
@@ -63,9 +73,23 @@ final class User
 
     public function logIn(Password $password): void
     {
-        auth()->attempt([
-            'email' => $this->getEmail()->getFullAddress(),
-            'password' => $password->toNative()
-        ]);
+        if (!password_verify($password->toNative(), $this->passwordHash)) {
+            $this->lastFailedLoginAttempt = Carbon::now();
+            $this->failedLoginAttempts++;
+            return;
+        }
+        $this->failedLoginAttempts = 0;
+        $this->lastFailedLoginAttempt = null;
+        $this->recordedEvents[] = new UserWasLoggedIn($password);
+    }
+
+    public function getRecordedEvents(): array
+    {
+        return $this->recordedEvents;
+    }
+
+    public function clearRecordedEvents(): void
+    {
+        $this->recordedEvents = [];
     }
 }

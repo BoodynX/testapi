@@ -4,13 +4,8 @@ Route::namespace('User\Api\Controllers')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
 
-    Route::get(
-        'user',
-        [
-            'uses' => UserController::class . '@show',
-            'as' => 'user.show',
-        ]
-    );
-
+    Route::middleware('auth:api')->group(function () {
+        Route::get('user', 'UserController@show')->name('user.show');
+    });
 });
 

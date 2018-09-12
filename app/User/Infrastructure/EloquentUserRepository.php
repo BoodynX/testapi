@@ -4,6 +4,7 @@ namespace App\User\Infrastructure;
 
 use App\User\Domain\User;
 use App\User\Domain\UserRepository;
+use App\User\Domain\UserWasLoggedIn;
 use App\User\Domain\ValueObjects\Email;
 use App\User\Domain\ValueObjects\Password;
 use App\User\Infrastructure\Models\User as UserModel;
@@ -20,6 +21,13 @@ class EloquentUserRepository implements UserRepository
         ]);
 
         return $this->makeFromModel($userModel);
+    }
+
+    public function save(User $user): void
+    {
+        $this->handleEvents($user);
+
+        //@TODO user update
     }
 
     public function findByEmail(Email $email): ?User
@@ -44,5 +52,20 @@ class EloquentUserRepository implements UserRepository
             new Password($userModel->password),
             $userModel->name
         );
+    }
+
+    private function handleEvents(User $user)
+    {
+        foreach ($user->getRecordedEvents() as $event) {
+            if ($event instanceof UserWasLoggedIn) {
+                /** @var $event UserWasLoggedIn */
+                auth()->attempt([
+                    'email' => $user->getEmail()->getFullAddress(),
+                    'password' => $event->password()
+                ]);
+                continue;
+            }
+            throw new \LogicException(get_class($event).'was not handled');
+        }
     }
 }

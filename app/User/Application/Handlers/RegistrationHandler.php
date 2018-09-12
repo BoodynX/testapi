@@ -22,7 +22,7 @@ final class RegistrationHandler
             $command->getPassword(),
             $command->getName()
         );
+
         $this->userRepository->add($user);
-        $user->logIn($command->getPassword());
     }
 }

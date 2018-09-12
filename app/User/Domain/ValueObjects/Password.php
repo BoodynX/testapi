@@ -22,7 +22,7 @@ class Password
         return $this->password;
     }
 
-    public function getHash(): string
+    public function generateHash(): string
     {
         return bcrypt($this->password);
     }

@@ -44,7 +44,7 @@ class PpvController extends Controller
      * Relationships
      */
 
-    public function users(UserRepository $userRepository): UserResource
+    public function users(Ppv $ppv, UserRepository $userRepository): UserResource
     {
         UserResource::withoutWrapping();
 
